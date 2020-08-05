@@ -26,6 +26,7 @@ async function getdata(req, res, next) {
             res.send(404);
         }
         else if (user.password == result.password && user.userId == result.userId) {
+            req.session.user=result;
             res.send(200, result)
         }
         else {
