@@ -18,6 +18,7 @@ async function checkuserExit(userId, user) {
     }
 }
 
+<<<<<<< HEAD
 function getdata(req,res){
     var userId=req.body.userId;
     var password=req.body.password;
@@ -33,6 +34,22 @@ function getdata(req,res){
       req.session.user=user;
       return res.status(200).send();
     })};
+=======
+async function getdata(req, res, next) {
+    const user = req.body;
+    const userId = req.params.id;
+    await registration.findById(userId, function (err, result) {
+        if (err) {
+            res.send(404);
+        }
+        else if (user.password == result.password && user.userId == result.userId) {
+            req.session.user=result;
+            res.send(200, result)
+        }
+        else {
+            res.send(404, { message: "incorrect userId or password" });
+        }
+>>>>>>> d86e67ac74880df7a0cfa292b397fa74c085e628
 
 const createdata = async function (req, res, next) {
     const newUser = new registration(req.body);
