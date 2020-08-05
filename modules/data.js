@@ -18,22 +18,22 @@ async function checkuserExit(userId, user) {
     }
 }
 
-async function getdata(req, res, next) {
-    const user = req.body;
-    const userId = req.params.id;
-    await registration.findById(userId, function (err, result) {
-        if (err) {
-            res.send(404);
-        }
-        else if (user.password == result.password && user.userId == result.userId) {
-            res.send(200, result)
-        }
-        else {
-            res.send(404, { message: "incorrect userId or password" });
-        }
+function getdata(req,res){
+    var userId=req.body.userId;
+    var password=req.body.password;
+  
+    registration.findOne({userId:userId,password:password},function(err,user){
+      if(err){
+        return res.send(err);
+  
+      }
+      if(!user){
+        return res.send(404,{message:"invalid user id or password"})
+      }
+      req.session.user=user;
+      return res.status(200).send();
+    })};
 
-    })
-}
 const createdata = async function (req, res, next) {
     const newUser = new registration(req.body);
     const response = await newUser.save();
@@ -57,7 +57,7 @@ const updatedata = async function (req, res, next) {
     }
     const response = await registration.findByIdAndUpdate(userId, user);
     req.session.user=response;
-    res.send(200, response);
+    res.send(200);
 
 }
 const updatepatchdata = async function (req, res, next) {
@@ -89,7 +89,7 @@ function sessions(req,res){
       return res.status(401).send("session is over");
   
     }
-    return res.status(200).send("session running")
+    return res.status(200).send(req.session.user)
   
   }
 
