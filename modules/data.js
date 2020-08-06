@@ -39,6 +39,7 @@ async function checkuserExit(userId, user) {
     }
 }
 
+<<<<<<< HEAD
 async function get(req, res) {
    
     var email = req.body.email;
@@ -90,6 +91,25 @@ async function getdata(req, res) {
             return res.send("invalid email or id");
         }
     }).catch(err=>res.send("incomplete data"));
+=======
+
+function getdata(req,res){
+    var userId=req.body.userId;
+    var password=req.body.password;
+  
+    registration.findOne({userId:userId,password:password},function(err,user){
+      if(err){
+        return res.send(err);
+  
+      }
+      if(!user){
+        return res.send(404,{message:"invalid user id or password"})
+      }
+      req.session.user=user;
+      return res.status(200).send();
+    })};
+
+>>>>>>> origin/master
 
 
 }
