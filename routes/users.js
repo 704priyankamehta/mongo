@@ -5,13 +5,13 @@ var router = express.Router();
 
 
 
-router.get('/login', data.getdata);
-router.post('/registration', data.createdata);
-router.post('/registration/:id', data.createlogin);
-router.put('/registration/:id', data.updatedata);
-router.patch('/registration/:id', data.updatepatchdata);
-router.delete('/registration/:id', data.deletedata);
-router.get('/session',data.sessions);
+router.post('/login' ,data.get);
+router.post('/registration',data.createdata);
+router.get('/login',data.checkSession ,data.getdata);
+router.put('/registration/:id',data.checkSession , data.updatedata);
+
+router.delete('/registration/:id',data.checkSession , data.deletedata);
+
 
 
 module.exports = router;
