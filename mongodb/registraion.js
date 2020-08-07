@@ -7,7 +7,7 @@ var user=new Schema({
         index:{
             unique:true
         }},
-        email:{type:String,
+        email:{type:String,required:true,
             index:{unique:true}},
     password:{type:String ,required:true,index:{
             unique:true
@@ -16,6 +16,6 @@ var user=new Schema({
 
 var registration=mongoose.model('registration',user);
 
-registration.createIndexes();
+
 
 module.exports=registration;
